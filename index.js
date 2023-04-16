@@ -1,4 +1,3 @@
-
 'use strict';
 
 const express = require('express');
@@ -64,7 +63,7 @@ app.use("*", notFoundErrorHandler)// make sure to always make it the last route
 //GET Functions
 function getAllRecipesHandler(req, res) {
 
-    let { userID } = req.body;
+    let { userID } = req.query;
     let values = [userID];
     let query = `select * from ${recipes_table} where userID=$1`;
 
@@ -79,7 +78,7 @@ function getAllRecipesHandler(req, res) {
 
 function getAllIngredientHandler(req, res) {
 
-    let { userID } = req.body;
+    let { userID } = req.query;
     let values = [userID];
     let query = `select * from ${recipes_table} where userID=$1;`
 
@@ -179,7 +178,7 @@ function updateHandler(req, res) {
 
 //GET Functions
 function analyzedInstructionsHandler(req, res) {
-    let url = `https://api.spoonacular.com/recipes/${req.body.id}/analyzedInstructions?apiKey=${apikey}`;
+    let url = `https://api.spoonacular.com/recipes/${req.query.id}/analyzedInstructions?apiKey=${apikey}`;
     axios.get(url)
         .then((result) => {
             let response = result.data;
@@ -192,7 +191,7 @@ function analyzedInstructionsHandler(req, res) {
 
 function autoCompleteHandler(req, res) {
 
-    let url = `https://api.spoonacular.com/food/ingredients/autocomplete?${qureyString.stringify(req.body)}&apiKey=${apikey}`
+    let url = `https://api.spoonacular.com/food/ingredients/autocomplete?${qureyString.stringify(req.query)}&apiKey=${apikey}`
     axios.get(url)
         .then((result) => {
             let response = result.data;
@@ -206,7 +205,7 @@ function autoCompleteHandler(req, res) {
 function findByIngredientsHandler(req, res) {
 
     // req.body = [{"items": ["cheese", "flour", "tomato"], "number": 3}];
-    let url = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${formatDataToPattern(req.body)}&apiKey=${apikey}`;
+    let url = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${formatDataToPattern(req.query)}&apiKey=${apikey}`;
 
     axios.get(url)
 
@@ -219,7 +218,7 @@ function findByIngredientsHandler(req, res) {
 }
 
 function complexSearchHandler(req, res) {
-    let url = `https://api.spoonacular.com/recipes/complexSearch?${qureyString.stringify(req.body)}&apiKey=${apikey}`
+    let url = `https://api.spoonacular.com/recipes/complexSearch?${qureyString.stringify(req.query)}&apiKey=${apikey}`
 
     axios.get(url)
         .then((result) => {
@@ -259,12 +258,12 @@ function formatDataToPattern(data) {
 
 //server start section
 
-// client.connect().then(() => {
-//     app.listen(PORT, () => {
-//         console.log(`Server is listening ${PORT}`);
-//     })
+client.connect().then(() => {
+    app.listen(PORT, () => {
+        console.log(`Server is listening ${PORT}`);
+    })
 
-// }).catch((error) => {
+}).catch((error) => {
 
-//     console.log(error);
-// })
+    console.log(error);
+}) //ayman 6:27
