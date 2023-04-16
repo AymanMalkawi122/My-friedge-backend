@@ -16,8 +16,8 @@ const qureyString = require("querystring");
 const PORT = process.env.PORT;
 const apikey = process.env.API_KEY;
 const dataBaseUrl = process.env.DATABASE_URL;
-const ingredients_table = process.env.INGREDIENT_TABLE;
-const recipes_table = process.env.RECIPE_TABLE;
+const ingredients_table = process.env.INGREDIENT_TABLE; // = favorite_ingredient   *FROM SCHEMA.SQL*
+const recipes_table = process.env.RECIPE_TABLE; //= favorite_recipe  *FROM SCHEMA.SQL*
 
 const client = new Client(dataBaseUrl);
 //app useages
@@ -28,40 +28,30 @@ app.use(bodyParser.json());
 //---SQL Routes---
 //GET Routes
 app.get("/allRecipes", getAllRecipesHandler);
-app.get('/allIngredients', getAllIngredientHandler);
+app.get('/allIngredients', getAllIngredientHandler); 
 
 //POST Routs
-app.post("/addNewRecipe", addNewRecipesHandler);
-app.post('/addIngredient', addNewIngredientHandler);
+app.post("/addNewRecipe", addNewRecipesHandler); 
+app.post('/addIngredient', addNewIngredientHandler); 
 
 //PUT Routs
-app.put('/updateIngredient/:id', updateHandler);
+app.put('/updateIngredient', updateHandler); 
 
 //DELETE Routs
 
-app.delete('/deleteRecipes', deleteRecipesHandler);
-app.delete('/deleteIngredient', deleteIngredientHandler);
+app.delete('/deleteRecipes', deleteRecipesHandler); 
+app.delete('/deleteIngredient', deleteIngredientHandler); 
 
 //---API Routes---
 //GET Routes
 app.get("/complexSearch", complexSearchHandler);
 
 app.get("/findByIngredients", findByIngredientsHandler);
-app.get("/ingredients/autocomplete", ingredientsAutocomplete );
-
 
 app.get('/recipeAnalyzedInstructions', analyzedInstructionsHandler);
 
-app.get('/autoCompleteIngredient', autoCompleteHandler);
+app.get('/autoCompleteIngredient', autoCompleteHandler); 
 
-
-//---API Routes---
-
-
-app.get('/recipeAnalyzedInstructions', analyzedInstructionsHandler);
-
-app.get('/autoCompleteIngredient', autoCompleteHandler);
-//---API Routes---
 
 
 //Error Handler Routes
@@ -90,7 +80,8 @@ function getAllRecipesHandler(req, res) {
 function getAllIngredientHandler(req, res) {
 
     let { userID } = req.body;
-    let query = `SELECT * from favorite_ingredient where userID=${userID}`;
+    let values = [userID];
+    let query = `select * from ${recipes_table} where userID=$1;`
 
     client.query(query, values, (error, sqlResult) => {
         if (error) {
@@ -148,7 +139,6 @@ function addNewRecipesHandler(req, res) {
 }
 
 function addNewIngredientHandler(req, res) {
-    console.log(req.body);
 
     let { item_name, item_image, quantity, id } = req.body;
 
@@ -192,7 +182,6 @@ function analyzedInstructionsHandler(req, res) {
     let url = `https://api.spoonacular.com/recipes/${req.body.id}/analyzedInstructions?apiKey=${apikey}`;
     axios.get(url)
         .then((result) => {
-            console.log(result.data);
             let response = result.data;
             res.json(response);
         })
