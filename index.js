@@ -259,12 +259,12 @@ function formatDataToPattern(data) {
 
 //server start section
 
-client.connect().then(() => {
-    app.listen(PORT, () => {
-        console.log(`Server is listening ${PORT}`);
-    })
+// client.connect().then(() => {
+//     app.listen(PORT, () => {
+//         console.log(`Server is listening ${PORT}`);
+//     })
 
-}).catch((error) => {
+// }).catch((error) => {
 
-    console.log(error);
-})
+//     console.log(error);
+// })
