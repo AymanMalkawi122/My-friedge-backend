@@ -207,7 +207,7 @@ function autoCompleteHandler(req, res) {
 function findByIngredientsHandler(req, res) {
 
     // req.body = [{"items": ["cheese", "flour", "tomato"], "number": 3}];
-    let url = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${formatDataToPattern(req.query)}&apiKey=${apikey}`;
+    let url = `https://api.spoonacular.com/recipes/findByIngredients?${qureyString.stringify(req.query)}&apiKey=${apikey}`;
 
     axios.get(url)
 
