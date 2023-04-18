@@ -38,7 +38,7 @@ app.put('/updateIngredient', updateHandler);
 
 //DELETE Routs
 
-app.delete('/deleteRecipes', deleteRecipesHandler); 
+app.delete('/deleteRecipe', deleteRecipesHandler); 
 app.delete('/deleteIngredient', deleteIngredientHandler); 
 
 //---API Routes---
@@ -81,7 +81,7 @@ function getAllIngredientHandler(req, res) {
 
     let { userID } = req.query;
     let values = [userID];
-    let query = `select * from ${recipes_table} where userID=$1;`
+    let query = `select * from ${ingredients_table} where userID=$1;`
 
     client.query(query, values, (error, sqlResult) => {
         if (error) {
