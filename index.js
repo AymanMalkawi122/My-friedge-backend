@@ -53,6 +53,7 @@ app.get('/autoCompleteIngredient', autoCompleteHandler);
 
 app.get('/randomRecipes', randomRecipesHandler);
 
+app.get('/searchIngredients', searchIngredientsHandler);
 
 //Error Handler Routes
 app.use("*", notFoundErrorHandler)// make sure to always make it the last route 
@@ -232,7 +233,7 @@ function complexSearchHandler(req, res) {
 }
 
 function randomRecipesHandler(req,res){
-    let url = `https://api.spoonacular.com/recipes/random?number=1&apiKey=${apikey}`
+    let url = `https://api.spoonacular.com/recipes/random?number=10&apiKey=${apikey}`
 
     axios.get(url)
     .then((result) => {
@@ -243,6 +244,21 @@ function randomRecipesHandler(req,res){
         serverErrorHadnler(req, res, error);
     })
 
+
+}
+
+function searchIngredientsHandler (req,res){
+let url = `https://api.spoonacular.com/food/ingredients/search?query=${item}&apiKey=${apikey}`
+
+    axios.get(url)
+    .then((result) => {
+
+        res.json(result.data);
+        console.log(result.data);
+    })
+    .catch((error) => {
+        serverErrorHadnler(req, res, error);
+    })
 
 }
 
@@ -274,13 +290,14 @@ function formatDataToPattern(data) {
 
 //server start section
 
-client.connect().then(() => {
+// client.connect().then(() => {
     app.listen(PORT, () => {
         console.log(`Server is listening ${PORT}`);
-    })
+    // })
 
-}).catch((error) => {
+// }).catch((error) => {
 
-    console.log(error);
+    // console.log(error);
 }) //ayman 6:27
 //ibraheem added the random recipe 1:22
+//ibraheem added the search ingradaint route
