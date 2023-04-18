@@ -290,14 +290,15 @@ function formatDataToPattern(data) {
 
 //server start section
 
-// client.connect().then(() => {
+ client.connect().then(() => {
     app.listen(PORT, () => {
         console.log(`Server is listening ${PORT}`);
-    // })
+    })
 
-// }).catch((error) => {
+}).catch((error) => {
 
-    // console.log(error);
-}) //ayman 6:27
+     console.log(error);
+})
+//ayman 6:27
 //ibraheem added the random recipe 1:22
 //ibraheem added the search ingradaint route
