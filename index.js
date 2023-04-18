@@ -30,7 +30,7 @@ app.get("/allRecipes", getAllRecipesHandler);
 app.get('/allIngredients', getAllIngredientHandler); 
 
 //POST Routs
-app.post("/addNewRecipe", addNewRecipesHandler); 
+app.post("/addRecipe", addNewRecipesHandler); 
 app.post('/addIngredient', addNewIngredientHandler); 
 
 //PUT Routs
