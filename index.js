@@ -248,8 +248,8 @@ function randomRecipesHandler(req,res){
 }
 
 function searchIngredientsHandler (req,res){
-let url = `https://api.spoonacular.com/food/ingredients/search?query=${item}&apiKey=${apikey}`
-
+let url = `https://api.spoonacular.com/food/ingredients/search?query=${qureyString.stringify(req.query)}&apiKey=${apikey}`
+//let url = `https://api.spoonacular.com/food/ingredients/search?query=${item}&apiKey=${apikey}` <=== old code (the item variable dosent exist) ayman 3:24 
     axios.get(url)
     .then((result) => {
 
